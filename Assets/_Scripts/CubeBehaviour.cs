@@ -86,8 +86,8 @@ public class CubeBehaviour : MonoBehaviour
             {
                 if (contacts[i].cube.gameObject.GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)
                 {
-                    transform.position = transform.position - contacts[i].penetration *  contacts[i].face;
-                    contacts[i].cube.transform.position = contacts[i].cube.transform.position + contacts[i].penetration *  contacts[i].face;
+                    transform.position = transform.position - contacts[i].penetration * 0.5f * contacts[i].face;
+                    contacts[i].cube.transform.position = contacts[i].cube.transform.position + contacts[i].penetration * 0.5f * contacts[i].face;
                 }
                 else
                 {

@@ -112,14 +112,17 @@ public class CollisionManager : MonoBehaviour
         if ((s.collisionNormal == Vector3.forward) || (s.collisionNormal == Vector3.back))
         {
             s.direction = new Vector3(s.direction.x, s.direction.y, -s.direction.z);
+            Debug.Log("forward or back");
         }
         else if ((s.collisionNormal == Vector3.right) || (s.collisionNormal == Vector3.left))
         {
             s.direction = new Vector3(-s.direction.x, s.direction.y, s.direction.z);
+            Debug.Log("right or left");
         }
         else if ((s.collisionNormal == Vector3.up) || (s.collisionNormal == Vector3.down))
         {
             s.direction = new Vector3(s.direction.x, -s.direction.y, s.direction.z);
+            Debug.Log("up or down");
         }
     }
 
@@ -222,10 +225,10 @@ public class CollisionManager : MonoBehaviour
             float[] distances = 
             {
                 (bullet.max.x - cube.min.x),
-                (bullet.max.y - cube.min.y),
-                (bullet.max.z - cube.min.z),
                 (cube.max.x - bullet.min.x),
+                (bullet.max.y - cube.min.y),
                 (cube.max.y - bullet.min.y),
+                (bullet.max.z - cube.min.z),
                 (cube.max.z - bullet.min.z),
             };
 
@@ -241,9 +244,9 @@ public class CollisionManager : MonoBehaviour
                 }
             }
 
+            Reflect(bullet);
             bullet.penetration = penetration;
             bullet.collisionNormal = -face;
-            Reflect(bullet);
         }
     }
 }
