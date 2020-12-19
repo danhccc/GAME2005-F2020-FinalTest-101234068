@@ -16,6 +16,8 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Movement")]
     public float speed;
     public bool isGrounded;
+    public Vector3 playerVelocity;
+    public float transformUp;
 
 
     public RigidBody3D body;
@@ -24,7 +26,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void start()
     {
-
+        playerVelocity = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -32,7 +34,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _Fire();
         _Move();
-        //BackToMenu();
+        BackToMenu();
     }
 
     private void _Move()
@@ -64,12 +66,14 @@ public class PlayerBehaviour : MonoBehaviour
             }
 
             body.velocity = Vector3.Lerp(body.velocity, Vector3.zero, 0.9f);
-            body.velocity = new Vector3(body.velocity.x, 0.0f, body.velocity.z); // remove y
-
+            body.velocity = new Vector3(body.velocity.x, 0.0f, body.velocity.z);
+            playerVelocity = Vector3.Lerp(body.velocity, Vector3.zero, 0.9f);
 
             if (Input.GetAxisRaw("Jump") > 0.0f)
             {
-                body.velocity = transform.up * speed * 0.1f * Time.deltaTime;
+                body.velocity = transform.up * transformUp *  Time.deltaTime;
+                body.velocity.x = playerVelocity.x;
+                body.velocity.z = playerVelocity.z;
             }
 
             transform.position += body.velocity;
@@ -101,12 +105,12 @@ public class PlayerBehaviour : MonoBehaviour
         isGrounded = cube.isGrounded;
     }
 
-    //private void BackToMenu()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.P))
-    //    {
-    //        SceneManager.LoadScene("Menu");
-    //    }
-    //}
+    private void BackToMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
 
 }
